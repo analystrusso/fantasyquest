@@ -1,9 +1,8 @@
 from enum import Enum, auto
-from npc_enemy import Npc
-from npc_enemy import Enemy
+from npc_enemy import Npc, Enemy, shopkeeper_inventory
 
 
-# Setting up the world
+
 
 class Directions(str, Enum):
     NORTH = auto()
@@ -12,6 +11,9 @@ class Directions(str, Enum):
     WEST = auto()
     UP = auto()
     DOWN = auto()
+
+
+
 
     @classmethod
     def from_str(cls, value: str) -> 'Directions':
@@ -26,6 +28,7 @@ class Directions(str, Enum):
         return mapping.get(value.lower())
 
 
+
 class Location:
     def __init__(self, name, description):
         self.description = description
@@ -36,39 +39,57 @@ class Location:
         self.visited = False
         self.items = []
 
+
+
     def add_connection(self, direction, location):
         self.connected_locations[direction] = location
 
+
+
     def spawn_npcs(self):
         if self.description == "You are standing in the town square. There are people around, and the air smells of fresh bread.":
-            self.npcs.append(Npc.shopkeeper())
+            self.npcs.append(Npc.shopkeeper(shopkeeper_inventory))
+
+
 
     def get_npcs(self):
         return self.npcs
 
+
+
     enemy_spawns = {
         "town_square": [],
-        "forest": [Enemy.goblin],
+        "forest": [Enemy.goblin, Enemy.goblin, Enemy.goblin],
         "outside_cave": [Enemy.orc],
         "inside_cave": [Enemy.troll]}
+
+
 
     def spawn_enemies(self):
         for enemy in self.enemy_spawns.get(self.name, []):
             self.enemies.append(enemy())
+
+
 
     def despawn_enemies(self):
         for enemy in self.enemies[:]:
             if enemy.health <= 0:
                 self.enemies.remove(enemy)
 
+
+
     def get_enemies(self):
         return self.enemies
+
 
 
 class World:
     def __init__(self, locations, starting_location):
         self.locations = locations
         self.starting_location = starting_location
+
+
+
 
     @classmethod
     def create_world(cls):

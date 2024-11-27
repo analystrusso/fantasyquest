@@ -5,6 +5,8 @@ class Items:
         self.value = value
 
 
+
+
 class Weapon(Items):
     def __init__(self, name, description, value, damage):
         super().__init__(name, description, value)
@@ -12,7 +14,9 @@ class Weapon(Items):
 
 iron_sword = Weapon("Iron Sword", "An old, rusted sword.", 10, 5)
 steel_sword = Weapon("Steel Sword", "A sturdy steel sword.", 20, 10)
-greatsword = Weapon("Greatsword", "A powerful two-handed sword.", 30, 15)
+great_sword = Weapon("Greatsword", "A powerful two-handed sword.", 30, 15)
+
+
 
 
 class Armor(Items):

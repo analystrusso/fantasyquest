@@ -1,4 +1,3 @@
-# Create the player character
 def create_character():
     print("Welcome to the Text-Based Adventure Game!")
     name = input("Enter your character's name: ")
@@ -20,11 +19,12 @@ def create_character():
     class_choice = input("> ")
     char_class = class_dict.get(class_choice)  # Default to Warrior if input is invalid
 
-    return Character(name, race(), char_class(), xp=0)
+    return Player(name, race(), char_class(), xp=0)
+
 
 
 # Character class
-class Character:
+class Player:
     def __init__(self, name, race, char_class, xp):
         self.name = name
         self.race = race
@@ -40,8 +40,10 @@ class Character:
         self.level = 1
         self.equipped_weapon = None
         self.equipped_armor = None
+        self.gold = 1000
 
-        # Leveling
+
+
 
     def level_up(self):
         if self.xp >= 50 and self.level < 10:
@@ -52,6 +54,8 @@ class Character:
             self.attack_power += 2
             self.defense += 1
             print(f"Level up! You are now level {self.level}.")
+            
+
 
     def add_item(self, item, quantity=1):
         # Check if the item already exists in the inventory
@@ -62,6 +66,8 @@ class Character:
         # If the item is not found, add it to the inventory
         self.inventory.append({'item': item, 'quantity': quantity})
 
+
+
     def remove_item(self, item_name, quantity=1):
         for inventory_item in self.inventory:
             if inventory_item['item'].name == item_name:
@@ -69,11 +75,13 @@ class Character:
                 return
 
 
+
     def is_alive(self):
         return self.health > 0
 
 
-# Races
+
+
 class Race:
     def __init__(self, health_bonus, attack_bonus, defense_bonus):
         self.health_bonus = health_bonus
@@ -81,9 +89,13 @@ class Race:
         self.defense_bonus = defense_bonus
 
 
+
+
 class Human(Race):
     def __init__(self):
         super().__init__(10, 2, 2)
+
+
 
 
 class Elf(Race):
@@ -91,12 +103,15 @@ class Elf(Race):
         super().__init__(0, 4, 0)
 
 
+
+
 class Dwarf(Race):
     def __init__(self):
         super().__init__(20, 0, 2)
 
 
-# Classes
+
+
 class Class:
     def __init__(self, health_bonus, attack_bonus, defense_bonus):
         self.health_bonus = health_bonus
@@ -104,14 +119,20 @@ class Class:
         self.defense_bonus = defense_bonus
 
 
+
+
 class Warrior(Class):
     def __init__(self):
         super().__init__(10, 6, 6)
 
 
+
+
 class Mage(Class):
     def __init__(self):
         super().__init__(-10, 10, -2)
+
+
 
 
 class Archer(Class):
